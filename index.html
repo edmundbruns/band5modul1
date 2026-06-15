@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Band 5, Modul 1: Konflikte im schulischen Alltag verstehen | SOL-Lernpfad Schulsozialarbeit Niedersachsen</title>
+<style>
+:root {
+ --bg:#f6f7fb; --card:#ffffff; --ink:#172033; --muted:#5b6475; --line:#d7dcea; --accent:#1f4e79; --ok:#1d6b42; --warn:#8a5a00; --bad:#8b1e1e;
+}
+* {box-sizing:border-box}
+body {margin:0;background:var(--bg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);line-height:1.55}
+header {background:linear-gradient(135deg,#173b5f,#1f4e79);color:white;padding:28px 24px}
+header h1 {margin:.2rem 0;font-size:clamp(1.5rem,3vw,2.4rem)}
+header p {max-width:960px;margin:.3rem 0;color:#e7edf6}
+
+.header-submit-controls {display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-top:14px}
+.header-submit-controls label {display:block;min-width:220px;max-width:300px;font-weight:650;color:white}
+.header-submit-controls input {margin-top:5px;color:var(--ink)}
+.header-submit-controls button {background:#327d4f;color:white}
+.header-submit-controls button.secondary {background:#596579;color:white}
+.header-submit-controls .checkline {display:flex;gap:8px;align-items:flex-start;min-width:280px;max-width:720px;font-weight:550;color:#e7edf6}
+.header-submit-controls .checkline input {width:auto;margin-top:4px}
+.header-send-status {font-weight:650;color:#e7edf6;min-width:240px;padding:10px 0}
+.layout {display:grid;grid-template-columns:320px 1fr;gap:20px;padding:20px;max-width:1500px;margin:auto}
+nav {position:sticky;top:16px;align-self:start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+nav.hidden {display:none!important}
+.layout.full {grid-template-columns:1fr}
+.navbtn {
+ display:block;width:100%;text-align:left;margin:6px 0;padding:10px;border:1px solid var(--line);
+ border-radius:10px;background:#fff;color:var(--ink)!important;cursor:pointer;font-weight:650;
+}
+.navbtn.locked {opacity:1;cursor:not-allowed;background:#f1f2f5;color:#5b6475!important;border-color:#d9deea}
+.navbtn.done {border-color:#7fc499;background:#eef9f1;color:#173b25!important}
+.navbtn.active {outline:3px solid #b7cde4;background:#eef5fb;color:#102033!important}
+main {min-width:0}
+.card {background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:0 4px 18px rgba(0,0,0,.05)}
+.section {display:none}
+.section.active {display:block}
+.controls {display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0}
+button {border:0;border-radius:10px;background:var(--accent);color:white;padding:10px 14px;cursor:pointer;font-weight:650}
+button.secondary {background:#596579}
+button:disabled {opacity:.75;cursor:not-allowed}
+.navbtn:disabled {color:#5b6475!important;background:#f1f2f5!important}
+.progress {height:14px;background:#e3e7ef;border-radius:20px;overflow:hidden;margin:10px 0}
+#bar {height:100%;width:0;background:#327d4f}
+.theory,.task,.case,.nds,.warn,.hint,.linebox,.solution,.analysis,.feedback,.competence,.certificate,.printcard {
+border-radius:14px;padding:14px;margin:14px 0;border:1px solid var(--line);background:#fff
+}
+.theory {background:#f9fbff}
+.task {background:#fffdf6;border-color:#eadca6}
+.case {background:#f6fbf8;border-color:#b8d9c4}
+.nds {background:#eef5fb;border-color:#a8c4df}
+.warn {background:#fff3f3;border-color:#e3a5a5}
+.hint,.linebox {background:#f3f6f9}
+.solution {background:#eef9f1;border-color:#9ed0aa}
+.analysis {background:#f8f4ff;border-color:#c9b5ef}
+.feedback {background:#f4f6f9}
+.hidden {display:none!important}
+textarea,select,input {width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font:inherit;margin:8px 0;background:white}
+textarea {min-height:120px;resize:vertical}
+table {width:100%;border-collapse:collapse;margin:12px 0;background:white}
+th,td {border:1px solid var(--line);padding:9px;vertical-align:top}
+th {background:#eef3f8}
+.q {border:1px solid var(--line);border-radius:12px;padding:12px;margin:12px 0;background:white}
+.q label {display:block;margin:6px 0}
+.bad {color:var(--bad);font-weight:700}
+.good {color:var(--ok);font-weight:700}
+.warningText {color:var(--warn);font-weight:700}
+.lines {height:58px;border-bottom:1px solid #999}
+footer {padding:30px;text-align:center;color:var(--muted)}
+
+.skip-link{position:absolute;left:-999px;top:8px;background:#fff;color:#102033;padding:10px 14px;border-radius:10px;z-index:999;border:2px solid var(--accent)}
+.skip-link:focus{left:12px}
+.meta-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+.meta-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+.meta-card strong{display:block;color:var(--accent);margin-bottom:4px}
+.sciencebox{background:#eef5fb;border:1px solid #a8c4df;border-left:6px solid var(--accent);border-radius:14px;padding:14px;margin:14px 0}
+.rubric{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin:14px 0}
+.sourcebox{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:14px;margin:14px 0}
+.sourcebox li{margin-bottom:.35rem}
+@media(max-width:760px){.meta-grid{grid-template-columns:1fr}}
+
+@media(max-width:900px){
+ .layout {grid-template-columns:1fr;padding:10px}
+ nav {position:relative;top:auto}
+}
+@media print {
+ .printcard {break-inside:avoid; page-break-inside:avoid; margin-top:18px}
+ nav,.controls,button,.progress,#sendStatus,#sendStatusTop,#sendStatusHeader {display:none!important}
+ body {background:white}
+ .layout {display:block;padding:0}
+ .card {box-shadow:none;border:0;page-break-inside:avoid}
+ .section {display:block!important}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#hauptinhalt">Zum Hauptinhalt springen</a>
+<header>
+<p>SOL-Lernpfad Schulsozialarbeit Niedersachsen</p>
+<h1>Band 5, Modul 1: Konflikte im schulischen Alltag verstehen</h1>
+<p>Ein interaktiver Lernpfad für Studium, Anerkennungspraktikum und Berufseinstieg. Fokus: Konfliktverständnis, Abgrenzung zu Gewalt, Mobbing und Kinderschutz, Rolle der Schulsozialarbeit und Praxisbezug Niedersachsen / Emsland.</p>
+<div class="header-submit-controls" aria-label="Teilnehmendendaten und Ergebnisübermittlung">
+<label>Name<input id="learnerName" placeholder="Name" autocomplete="name"></label>
+<label>E-Mail<input id="userEmail" type="email" placeholder="name@example.de" autocomplete="email"></label>
+<label class="checkline"><input id="privacyConfirm" type="checkbox"> Ich bestätige, dass keine identifizierenden Falldaten eingetragen werden und die Übermittlung der Lerndaten an Google Sheets erfolgen darf.</label>
+<button class="secondary" onclick="saveNow()">Zwischenspeichern</button>
+<button onclick="sendData()">Absenden</button>
+<span id="sendStatusHeader" class="header-send-status" aria-live="polite"></span>
+</div>
+</header>
+<div class="layout" id="layout">
+<nav id="nav" aria-label="Modulnavigation">
+<strong>Navigation</strong>
+<div class="progress" role="progressbar" aria-label="Bearbeitungsfortschritt" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="bar"></div></div>
+<p id="progressText">0 / 12 abgeschlossen</p>
+<p class="hint" style="font-size:.92rem;margin:8px 0">Gesperrte Abschnitte werden nach Abschluss des vorherigen Abschnitts freigeschaltet. Musterlösungen erscheinen erst nach eigener Bearbeitung.</p>
+<div id="navButtons"></div>
+</nav>
+<main id="hauptinhalt">
+<div class="controls">
+<button onclick="toggleNav()">Navigation ein/aus</button>
+<button class="secondary" onclick="resetProgress()">Fortschritt zurücksetzen</button>
+<button class="secondary" onclick="window.print()">Drucken / PDF</button>
+</div>
+<div id="sections"></div>
+</main>
+</div>
+<footer>Hinweis: Dieses Modul ersetzt keine lokale Dienstanweisung, keine Rechtsberatung und keine Einzelfallentscheidung. Es trainiert Konfliktverständnis und professionelle Erstsortierung. Optimierte Hochschul- und Weiterbildungsversion, Stand: Juni 2026. Lokale Regelungen regelmäßig prüfen.</footer>
+<script>
+const APP_PUBLIC_URL = "https://script.google.com/macros/s/AKfycbx27eMRbvbzqs-CSMHIWUBpwjqjS6WZJuI0PqNI-KmRo4aqJKCU5Xe-Xm21cqijsDSdqQ/exec";
+const MODULE_ID = "B5M1_V6_FINAL";
+const SECTION_HTML = ["\n<div class=\"theory\">\n<h2>Band 5, Modul 1: Konflikte im schulischen Alltag verstehen</h2>\n<p>Dieses Modul eröffnet Band 5: Konflikte, Gewalt und Mobbing. Es knüpft an Band 4 an, setzt aber einen anderen Schwerpunkt: Nicht jede angespannte Situation ist Kinderschutz, nicht jeder Streit ist Gewalt und nicht jede wiederholte Gemeinheit ist automatisch Mobbing. Schulsozialarbeit muss zuerst sauber sortieren.</p>\n\n<div class=\"linebox\">\n<strong>Durchgehende Linie der Reihe:</strong>\n<ul>\n<li><strong>Band 1:</strong> Schulsozialarbeit arbeitet sozialpädagogisch, nicht strafend oder ordnungslogisch.</li>\n<li><strong>Band 2:</strong> Datenschutz, Zuständigkeit und Dokumentation bleiben handlungsleitend.</li>\n<li><strong>Band 3:</strong> Gesprächsführung bleibt transparent, beteiligend und ressourcenorientiert.</li>\n<li><strong>Band 4:</strong> Bei Gefährdung, Krise oder Schutzbedarf greift Schutzlogik.</li>\n<li><strong>Band 5:</strong> Konflikte, Gewalt und Mobbing werden differenziert verstanden und bearbeitet.</li>\n</ul>\n</div>\n\n<div class=\"nds\">\n<strong>Niedersachsen / Emsland:</strong> Das Modul betrachtet Konflikte im schulischen Alltag niedersächsischer Schulen mit besonderem Praxisbezug zu Grund- und Oberschule im ländlichen Raum des Emslands. Lokale Schulkonzepte, Präventionskonzepte, Schutzkonzepte, Ganztagsstrukturen und Kooperationswege sind am Standort zu prüfen.\n</div>\n</div>\n\n<div class=\"task\">\n<label for=\"t1\">Pflichtaufgabe: Erklären Sie, warum Schulsozialarbeit vor einer Intervention zuerst klären muss, ob eine Situation Streit, Konflikt, Gewalt, Mobbing oder Kinderschutzbezug hat.</label>\n<textarea id=\"t1\" data-required=\"true\" data-min=\"220\"></textarea>\n<button onclick=\"saveField('t1'); analyzeText('t1')\">Antwort prüfen</button>\n<div id=\"analysis_t1\" class=\"analysis\"></div>\n<button onclick=\"showSolutionIfReady(\\'s1\\')\">Musterlösung nach Bearbeitung anzeigen</button>\n<div id=\"s1\" class=\"solution hidden\">Eine falsche Einordnung führt zu falschem Handeln. Ein Streit braucht Klärung und Beteiligung. Gewalt braucht Grenze, Schutz und ggf. schulische Maßnahmen. Mobbing braucht ein anderes Vorgehen als ein einmaliger Konflikt. Kinderschutz verlangt Schutzlogik und Verfahren. Schulsozialarbeit muss deshalb sozialpädagogisch sortieren, bevor sie interveniert.</div>\n</div>\n", "\n<div class=\"theory\">\n<h2>Streit, Konflikt, Gewalt, Mobbing, Kinderschutz</h2>\n<table>\n<tr><th>Begriff</th><th>Kern</th><th>Erste fachliche Frage</th></tr>\n<tr><td>Streit</td><td>kurzfristige Auseinandersetzung, oft situativ</td><td>Was ist passiert und was brauchen die Beteiligten jetzt?</td></tr>\n<tr><td>Konflikt</td><td>wiederkehrende Spannung zwischen Interessen, Bedürfnissen oder Rollen</td><td>Welche Anliegen, Muster und Beziehungen stehen dahinter?</td></tr>\n<tr><td>Gewalt</td><td>körperliche, verbale, psychische, sexualisierte, digitale oder diskriminierende Schädigung / Bedrohung</td><td>Wer braucht Schutz, Grenze und Unterstützung?</td></tr>\n<tr><td>Mobbing</td><td>wiederholte, systematische Schädigung bei Machtungleichgewicht</td><td>Gibt es Wiederholung, Gruppe, Machtgefälle und Ausgrenzung?</td></tr>\n<tr><td>Kinderschutzbezug</td><td>mögliche Gefährdung des Wohls eines Kindes oder Jugendlichen</td><td>Reicht Konfliktbearbeitung noch aus oder braucht es Schutzlogik?</td></tr>\n</table>\n\n<div class=\"linebox\">\n<strong>Mobbing-Abgrenzung:</strong> Mobbing ist nicht einfach ein schlimmer Streit. Entscheidend sind Wiederholung, Machtungleichgewicht, systematische Schädigung und die Rolle der Gruppe. Ein Mobbingverdacht muss ernst genommen werden, darf aber nicht vorschnell etikettiert werden.\n</div>\n</div>\n\n<div class=\"task\">\n<label for=\"sel2\">Fall: Zwei Schüler streiten in der Pause einmalig um einen Ball. Einer schubst den anderen, danach gehen beide auseinander. Erste Einordnung?</label>\n<select id=\"sel2\" data-required=\"true\">\n<option value=\"\">Bitte wählen</option>\n<option>automatisch Mobbing</option>\n<option>zunächst Streit / situativer Konflikt mit möglicher Grenzklärung</option>\n<option>immer Kinderschutzfall</option>\n<option>keine Aufgabe der Schule</option>\n</select>\n<button onclick=\"checkSelect('sel2','zunächst Streit / situativer Konflikt mit möglicher Grenzklärung','fb2')\">Auswahl prüfen</button>\n<div id=\"fb2\" class=\"feedback\"></div>\n</div>\n", "\n<div class=\"theory\">\n<h2>Wann kippt ein Konflikt?</h2>\n<p>Konflikte entwickeln sich. Für Schulsozialarbeit ist wichtig, den Zeitpunkt zu erkennen, an dem normale Klärung nicht mehr ausreicht.</p>\n<table>\n<tr><th>Stufe</th><th>Beschreibung</th><th>Aufgabe der Schulsozialarbeit</th></tr>\n<tr><td>1</td><td>Irritation / Missverständnis</td><td>klären, übersetzen, Gespräch ermöglichen</td></tr>\n<tr><td>2</td><td>wiederholter Streit</td><td>Muster erkennen, Beteiligte einbeziehen</td></tr>\n<tr><td>3</td><td>Verhärtung / Gruppenbildung</td><td>Dynamik analysieren, Schutz prüfen</td></tr>\n<tr><td>4</td><td>Abwertung / Ausgrenzung</td><td>Mobbing- und Gewaltprüfung</td></tr>\n<tr><td>5</td><td>Bedrohung / Gewalt</td><td>Schutz, Grenze, Verfahren</td></tr>\n<tr><td>6</td><td>Gefährdung</td><td>Übergang zu Band 4 / Kinderschutzlogik</td></tr>\n</table>\n</div>\n\n<div class=\"task\">\n<label for=\"t3\">Pflichtaufgabe: Beschreiben Sie an einem Beispiel, woran Sie erkennen würden, dass ein Konflikt nicht mehr nur Klärung, sondern Schutz, Grenze oder ein anderes Verfahren braucht.</label>\n<textarea id=\"t3\" data-required=\"true\" data-min=\"280\"></textarea>\n<button onclick=\"saveField('t3'); analyzeText('t3')\">Antwort prüfen</button>\n<div id=\"analysis_t3\" class=\"analysis\"></div>\n</div>\n", "\n<div class=\"theory\">\n<h2>Gewaltformen in Schule</h2>\n<p>Dieses Modul vertieft Gewalt noch nicht vollständig. Das folgt in Modul 5.2. Für die Konfliktanalyse braucht es aber eine erste Orientierung.</p>\n<table>\n<tr><th>Gewaltform</th><th>Beispiele</th><th>Erste fachliche Reaktion</th></tr>\n<tr><td>körperlich</td><td>Schlagen, Treten, Festhalten</td><td>Schutz, Grenze, Dokumentation</td></tr>\n<tr><td>verbal</td><td>Beleidigen, Drohen, Erniedrigen</td><td>Grenze, Sprache, Wirkung klären</td></tr>\n<tr><td>psychisch</td><td>Einschüchtern, Ausgrenzen, Bloßstellen</td><td>Dynamik und Schutzbedarf prüfen</td></tr>\n<tr><td>digital</td><td>Screenshots, Erpressung, Chatgruppe, Bloßstellung</td><td>Datenschutz, keine private Beweissammlung, Schutz</td></tr>\n<tr><td>sexualisiert</td><td>Grenzverletzungen, Übergriffe, intime Bilder</td><td>Schutzlogik, keine Verharmlosung, keine eigenständige Ermittlung</td></tr>\n<tr><td>diskriminierend / strukturell</td><td>rassistische, ableistische, sexistische oder armutsbezogene Abwertung</td><td>Betroffene schützen, Diskriminierung benennen, System prüfen</td></tr>\n</table>\n</div>\n\n<div class=\"task\">\n<label for=\"t4\">Pflichtaufgabe: Wählen Sie eine Gewaltform aus und erklären Sie, warum sie nicht als normaler Streit verharmlost werden darf.</label>\n<textarea id=\"t4\" data-required=\"true\" data-min=\"260\"></textarea>\n<button onclick=\"saveField('t4'); analyzeText('t4')\">Antwort prüfen</button>\n<div id=\"analysis_t4\" class=\"analysis\"></div>\n</div>\n\n<div class=\"theory\">\n<h2>Audio-Fallimpuls: „Nur Spaß?“</h2>\n<p>Dieser Fallimpuls ersetzt kein externes Video. Er nutzt einen kurzen gesprochenen Dialog als Reflexionsanlass. Falls die Vorlesefunktion im Browser nicht verfügbar ist, kann der Text auch gelesen werden.</p>\n\n<div class=\"case\" id=\"audioCaseText\">\n<strong>Falltext:</strong><br>\nLehrkraft: „Ich glaube, das ist einfach ein typischer Streit. Die Jungs ärgern sich halt.“<br>\nSchüler A: „Die lachen immer, wenn ich in die Gruppe komme.“<br>\nSchüler B: „War doch nur Spaß. Er übertreibt immer.“<br>\nMitschülerin: „Naja, die schicken auch Screenshots weiter. Ich will da aber nichts mit zu tun haben.“<br>\nSchulsozialarbeit: „Bevor wir entscheiden, was zu tun ist, sortieren wir: Was ist beobachtbar, was ist Vermutung, gibt es Wiederholung, Machtgefälle, Gruppe, digitale Verbreitung oder Schutzbedarf?“\n</div>\n\n<div class=\"controls\">\n<button onclick=\"speakAudioCase()\">Audio-Fall vorlesen</button>\n<button class=\"secondary\" onclick=\"stopAudioCase()\">Vorlesen stoppen</button>\n</div>\n\n<div class=\"hint\">\n<strong>Arbeitsauftrag:</strong> Hören oder lesen Sie den Fall. Sortieren Sie anschließend nicht nach Schuld, sondern nach fachlichen Kriterien: Oberfläche, mögliche Tiefenstruktur, Gruppe, digitale Dynamik, Machtgefälle und erster nächster Schritt.\n</div>\n</div>\n\n<div class=\"task\">\n<label for=\"t_audio\">Pflichtaufgabe Audio-Fall: Ordnen Sie den Fall ein. Was ist beobachtbar? Was spricht für Konflikt, was für Mobbingverdacht oder digitale Gewalt? Was sollte Schulsozialarbeit jetzt nicht vorschnell tun?</label>\n<textarea id=\"t_audio\" data-required=\"true\" data-min=\"420\"></textarea>\n<button onclick=\"saveField('t_audio'); analyzeText('t_audio')\">Antwort prüfen</button>\n<div id=\"analysis_t_audio\" class=\"analysis\"></div>\n<button onclick=\"showSolutionIfReady(\\'s_audio\\')\">Musterlösung nach Bearbeitung anzeigen</button>\n<div id=\"s_audio\" class=\"solution hidden\">Beobachtbar sind wiederholtes Auslachen, Hinweise auf Screenshots und eine Zeugin, die sich nicht einmischen möchte. Für Konflikt spricht die offene Auseinandersetzung. Für Mobbingverdacht sprechen Wiederholung, Gruppe, mögliche Machtasymmetrie und digitale Verbreitung. Für digitale Gewalt spricht das Weiterleiten von Screenshots. Schulsozialarbeit sollte nicht sofort alle gemeinsam an einen Tisch setzen, nicht die Klasse ausfragen und keine Screenshots privat sammeln. Nächste Schritte: Einzelklärung, Schutzbedarf prüfen, digitale Verbreitung begrenzen, Beobachtungen dokumentieren und passende schulische Zuständigkeiten klären.</div>\n</div>\n", "\n<div class=\"theory\">\n<h2>Entscheidungsbaum: Welche Logik ist nötig?</h2>\n<ol>\n<li><strong>Ist jemand akut gefährdet?</strong> Wenn ja: Schutzlogik / Band 4.</li>\n<li><strong>Ist es einmalig oder wiederholt?</strong> Wiederholung erhöht die fachliche Relevanz.</li>\n<li><strong>Gibt es ein Machtungleichgewicht?</strong> Körperlich, sozial, digital, sprachlich oder gruppenbezogen?</li>\n<li><strong>Gibt es Gruppe, Publikum oder digitale Verbreitung?</strong> Dann Ausgrenzungs- und Mobbingdynamik prüfen.</li>\n<li><strong>Gibt es Verletzung, Drohung oder massive Angst?</strong> Dann Gewalt- oder Krisenlogik prüfen.</li>\n<li><strong>Reicht Konfliktklärung?</strong> Oder braucht es Schutz-, Gewalt-, Mobbing- oder Kinderschutzlogik?</li>\n</ol>\n</div>\n\n<div class=\"task\">\n<label for=\"t5\">Pflichtaufgabe: Wenden Sie den Entscheidungsbaum auf einen schulischen Konfliktfall an. Trennen Sie Beobachtung, Aussage, Vermutung und nächsten Schritt.</label>\n<textarea id=\"t5\" data-required=\"true\" data-min=\"420\"></textarea>\n<button onclick=\"saveField('t5'); analyzeText('t5')\">Antwort prüfen</button>\n<div id=\"analysis_t5\" class=\"analysis\"></div>\n</div>\n", "\n<div class=\"theory\">\n<h2>Auftrag klären, nicht Konflikte „wegmachen“</h2>\n<table>\n<tr><th>Lehrkraft sagt</th><th>Fachliche Übersetzung</th></tr>\n<tr><td>„Der stört immer.“</td><td>Welche Situationen, Zeiten, Auslöser und Muster gibt es?</td></tr>\n<tr><td>„Die beiden können nicht miteinander.“</td><td>Welches Beziehungsmuster liegt vor?</td></tr>\n<tr><td>„Das ist Mobbing.“</td><td>Welche Kriterien sind erfüllt, welche Informationen fehlen?</td></tr>\n<tr><td>„Mach mal ein Gespräch.“</td><td>Auftrag, Rolle, Ziel, Vertraulichkeit und Rückmeldung klären.</td></tr>\n<tr><td>„Die sollen sich entschuldigen.“</td><td>Ist Entschuldigung sinnvoll oder nur symbolische Beruhigung?</td></tr>\n</table>\n<div class=\"linebox\">\n<strong>Rollenlinie aus Band 1 und 3:</strong> Schulsozialarbeit unterstützt Klärung, Beteiligung und nächste Schritte. Sie ersetzt keine Klassenführung und übernimmt keine pauschale Disziplinierung.\n</div>\n</div>\n\n<div class=\"case\">\n<h2>Mini-Fall: „Das ist eindeutig Mobbing.“</h2>\n<p>Eine Lehrkraft sagt: „Das ist eindeutig Mobbing. Machen Sie bitte ein Mediationsgespräch mit allen Beteiligten.“</p>\n</div>\n<div class=\"task\">\n<label for=\"t6\">Pflichtaufgabe: Formulieren Sie eine professionelle Antwort. Klären Sie dabei, warum Mediation bei Mobbingverdacht riskant sein kann und welche Informationen zuerst fehlen.</label>\n<textarea id=\"t6\" data-required=\"true\" data-min=\"360\"></textarea>\n<button onclick=\"saveField('t6'); analyzeText('t6')\">Antwort prüfen</button>\n<div id=\"analysis_t6\" class=\"analysis\"></div>\n<button onclick=\"showSolutionIfReady(\\'s6\\')\">Musterlösung nach Bearbeitung anzeigen</button>\n<div id=\"s6\" class=\"solution hidden\">„Ich nehme den Mobbingverdacht ernst. Bevor wir alle gemeinsam an einen Tisch setzen, müssen wir prüfen, ob Wiederholung, Machtgefälle, Gruppendynamik und Schutzbedarf vorliegen. Bei Mobbingverdacht kann ein gemeinsames Mediationsgespräch für die betroffene Person riskant sein. Ich würde zunächst getrennt sortieren, Beobachtungen sichern und dann mit Ihnen den nächsten schulischen Schritt abstimmen.“</div>\n</div>\n", "\n<div class=\"theory\">\n<h2>Regionaler Praxisbezug</h2>\n<p>Im ländlichen Raum des Emslands haben Konflikte oft eine besondere soziale Nähe: Familien kennen sich, Vereine überschneiden sich, Buswege und Ganztag verbinden Gruppen über Klassen hinaus. Konflikte enden deshalb nicht automatisch mit dem Schultag.</p>\n<div class=\"nds\">\n<strong>Typische Konflikträume:</strong>\n<ul>\n<li>Schulhof und Pause</li>\n<li>Mensa und Mittagessen</li>\n<li>Ganztag, AGs, Freispiel und Betreuung</li>\n<li>Buswartezeit, Schulweg und Abholsituationen</li>\n<li>Frühbetreuung und 6. Stunde</li>\n<li>Sport, Umkleide, Toiletten, Flure</li>\n<li>digitale Klassengruppen und private Chats</li>\n<li>Vereine, Nachbarschaft und Dorföffentlichkeit</li>\n</ul>\n</div>\n\n<table>\n<tr><th>Ganztagsort</th><th>Konfliktrisiko</th><th>Präventiver Blick</th></tr>\n<tr><td>Mensa</td><td>Lautstärke, Sitzplätze, Essen, Wartezeiten</td><td>feste Abläufe, Rückzugsoption, klare Zuständigkeit</td></tr>\n<tr><td>AG</td><td>Konkurrenz, Ausschluss, Leistungsdruck</td><td>Gruppenregeln, Rollenklärung, niedrigschwellige Rückmeldung</td></tr>\n<tr><td>Freispiel</td><td>unklare Aufsicht, wechselnde Gruppen</td><td>klare Räume, Spielmaterial, Beobachtung von Ausgrenzung</td></tr>\n<tr><td>6. Stunde</td><td>Müdigkeit, Übergang, wenig Struktur</td><td>ritualisierter Start, verlässliche Ansprechperson</td></tr>\n<tr><td>Buswartezeit</td><td>wenig Struktur, Publikum, Gruppendruck</td><td>Zuständigkeit, Aufsicht, sichere Wartebereiche</td></tr>\n</table>\n</div>\n\n<div class=\"case\">\n<h2>Mini-Fall: Eltern-WhatsApp eskaliert</h2>\n<p>Zwei Kinder streiten in der Schule. Am Abend schreiben Eltern in einer WhatsApp-Gruppe Vorwürfe. Am nächsten Morgen ist die halbe Klasse beteiligt, Kinder bringen Screenshots mit, Eltern fordern schnelle Sanktionen.</p>\n</div>\n<div class=\"task\">\n<label for=\"t7\">Pflichtaufgabe: Beschreiben Sie, wie Schule und Schulsozialarbeit diese Eskalation sortieren sollten. Berücksichtigen Sie Eltern, digitale Gruppendynamik, Datenschutz, Schutz betroffener Kinder und Emsland-/Ganztagskontext.</label>\n<textarea id=\"t7\" data-required=\"true\" data-min=\"440\"></textarea>\n<button onclick=\"saveField('t7'); analyzeText('t7')\">Antwort prüfen</button>\n<div id=\"analysis_t7\" class=\"analysis\"></div>\n</div>\n", "\n<div class=\"case\">\n<h2>Fall A: Grundschule</h2>\n<p>In Klasse 4 kommt es seit mehreren Tagen in der Pause zu Streit beim Fußball. Ein Kind wird wiederholt nicht gewählt, ruft dann Beleidigungen und schubst ein anderes Kind. Die Klasse sagt: „Der nervt immer.“ Die Lehrkraft möchte eine schnelle Lösung.</p>\n</div>\n\n<div class=\"theory\">\n<h2>Schüler:innenperspektive und Gruppenrollen</h2>\n<p>Konfliktanalyse darf nicht nur aus Erwachsenenperspektive erfolgen. Entscheidend ist, wie die beteiligten Kinder die Lage erleben und welche Rolle die Gruppe spielt.</p>\n<table>\n<tr><th>Rolle</th><th>Mögliche Wirkung</th></tr>\n<tr><td>aktive Antreiber:innen</td><td>treiben Ausgrenzung, Provokation oder Gewalt an</td></tr>\n<tr><td>Mitläufer:innen</td><td>verstärken durch Lachen, Likes, Weiterleiten oder Mitmachen</td></tr>\n<tr><td>Zuschauende</td><td>stabilisieren Dynamik durch Schweigen oder Wegsehen</td></tr>\n<tr><td>Verteidiger:innen</td><td>können Schutz, Normen und Deeskalation stärken</td></tr>\n<tr><td>Erwachsene</td><td>können klären, aber durch vorschnelle öffentliche Gespräche auch eskalieren</td></tr>\n</table>\n</div>\n\n<div class=\"task\">\n<label for=\"t8\">Pflichtaufgabe: Ordnen Sie den Fall aus Schüler:innenperspektive ein. Was erlebt das ausgeschlossene Kind? Was erlebt das schubsende Kind? Welche Gruppenrollen sind möglich? Was spricht für Konflikt, was für Mobbingverdacht?</label>\n<textarea id=\"t8\" data-required=\"true\" data-min=\"520\"></textarea>\n<button onclick=\"saveField('t8'); analyzeText('t8')\">Antwort prüfen</button>\n<div id=\"analysis_t8\" class=\"analysis\"></div>\n<button onclick=\"showSolutionIfReady(\\'s8\\')\">Musterlösung nach Bearbeitung anzeigen</button>\n<div id=\"s8\" class=\"solution hidden\">Das ausgeschlossene Kind erlebt möglicherweise Beschämung, Kontrollverlust und fehlende Zugehörigkeit. Das schubsende Kind kann zugleich Täteranteile zeigen und selbst in einer Ausgrenzungsdynamik stehen. Die Gruppe wirkt durch Nicht-Wählen, Zuschauen und abwertende Kommentare mit. Für Konflikt spricht der Fußballanlass. Für Mobbingverdacht sprechen Wiederholung, Gruppendynamik und Abwertung. Nächster Schritt: nicht vorschnell alle an einen Tisch, sondern getrennt sortieren, Schutz prüfen, Pausenstruktur beobachten und Gruppenrollen analysieren.</div>\n</div>\n", "\n<div class=\"case\">\n<h2>Fall B: Oberschule</h2>\n<p>In einer Klassengruppe werden Screenshots eines Schülers geteilt. Einige schreiben lachende Emojis. Der Schüler kommt nicht mehr gern zur Schule. Eine Mitschülerin sagt: „Das war doch nur Spaß.“</p>\n</div>\n\n<div class=\"theory\">\n<h2>Gemeinsames Gespräch: ja oder nein?</h2>\n<p>Ein gemeinsames Gespräch kann hilfreich sein, wenn die Beteiligten ungefähr gleich stark sind und keine akute Schutzlage besteht. Es kann schaden, wenn Machtgefälle, Mobbingverdacht, Angst, Gewalt oder digitale Bloßstellung vorliegen.</p>\n<table>\n<tr><th>Prüffrage</th><th>Bedeutung</th></tr>\n<tr><td>Sind die Beteiligten ungefähr gleich stark?</td><td>Wenn nein: erst Schutz und Einzelklärung.</td></tr>\n<tr><td>Gibt es Angst oder Machtgefälle?</td><td>Wenn ja: kein vorschnelles gemeinsames Gespräch.</td></tr>\n<tr><td>Gibt es Mobbingverdacht?</td><td>Mediation kann riskant sein.</td></tr>\n<tr><td>Gibt es Gewalt, Drohung oder digitale Verbreitung?</td><td>Schutz- und Verfahrenslogik prüfen.</td></tr>\n<tr><td>Wurde vorher einzeln geklärt?</td><td>Erst Perspektiven und Risiken sortieren.</td></tr>\n</table>\n</div>\n\n<div class=\"task\">\n<label for=\"t9\">Pflichtaufgabe: Analysieren Sie den Fall. Welche Konflikt-, Gewalt- oder Mobbinghinweise liegen vor? Wäre ein gemeinsames Gespräch jetzt sinnvoll? Begründen Sie.</label>\n<textarea id=\"t9\" data-required=\"true\" data-min=\"540\"></textarea>\n<button onclick=\"saveField('t9'); analyzeText('t9')\">Antwort prüfen</button>\n<div id=\"analysis_t9\" class=\"analysis\"></div>\n</div>\n<div class=\"warn\">\n<strong>Achtung:</strong> Keine private Sammlung oder Weiterleitung sensibler Screenshots. Keine öffentliche Bloßstellung in der Klasse. Zuerst Schutz, Datenschutz, Gesprächsführung und schulisches Verfahren prüfen.\n</div>\n", "\n<div class=\"theory\">\n<h2>Typische Fehler</h2>\n<table>\n<tr><th>Fehler</th><th>Risiko</th><th>Bessere Richtung</th></tr>\n<tr><td>„Die sollen sich einfach vertragen.“</td><td>Bagatellisierung, Machtgefälle bleibt unsichtbar</td><td>erst Dynamik und Schutzbedarf klären</td></tr>\n<tr><td>„Alle Beteiligten sofort zusammen an einen Tisch.“</td><td>bei Machtgefälle oder Mobbingverdacht riskant</td><td>zuerst getrennt sortieren und Schutz prüfen</td></tr>\n<tr><td>„Entschuldige dich, dann ist gut.“</td><td>oberflächlich, Dynamik bleibt bestehen</td><td>Verantwortung, Wirkung und nächste Schritte klären</td></tr>\n<tr><td>„Das klären die unter sich.“</td><td>Schutzpflicht kann übersehen werden</td><td>Konflikt- und Schutzlage prüfen</td></tr>\n<tr><td>„Das ist sofort Mobbing.“</td><td>vorschnelle Etikettierung</td><td>Wiederholung, Machtgefälle und Gruppe prüfen</td></tr>\n<tr><td>„Ich erzähle der Klassenleitung alles.“</td><td>Vertraulichkeit und Datenschutz verletzt</td><td>erforderliche Rückmeldung mit Grenzen</td></tr>\n</table>\n</div>\n\n<div class=\"task\">\n<label for=\"t10\">Pflichtaufgabe: Wählen Sie zwei Fehler aus und formulieren Sie jeweils eine bessere professionelle Alternative.</label>\n<textarea id=\"t10\" data-required=\"true\" data-min=\"360\"></textarea>\n<button onclick=\"saveField('t10'); analyzeText('t10')\">Antwort prüfen</button>\n<div id=\"analysis_t10\" class=\"analysis\"></div>\n</div>\n", "\n<div class=\"theory\">\n<h2>Druckbares Praxisformular</h2>\n<div class=\"printcard\">\n<h3>Konfliktanalyse Schulsozialarbeit Niedersachsen / Emsland</h3>\n<p><strong>Datum / Situation:</strong> ___________________________</p>\n<p><strong>Beteiligte:</strong> ___________________________</p>\n<p><strong>Ort / Kontext:</strong> ☐ Unterricht ☐ Pause ☐ Ganztag ☐ Mensa ☐ Bus ☐ AG ☐ digital ☐ anderer Ort</p>\n<p><strong>1. Konfliktraum:</strong></p><p class=\"lines\"></p>\n<p><strong>2. Beteiligte Rollen:</strong></p><p class=\"lines\"></p>\n<p><strong>3. Beobachtbare Fakten:</strong></p><p class=\"lines\"></p>\n<p><strong>4. Aussagen:</strong></p><p class=\"lines\"></p>\n<p><strong>5. Vermutungen / offene Fragen:</strong></p><p class=\"lines\"></p>\n<p><strong>6. Eskalationsstufe:</strong></p><p class=\"lines\"></p>\n<p><strong>7. Gewalt-/Mobbinghinweise:</strong></p><p class=\"lines\"></p>\n<p><strong>8. Schutzbedarf:</strong></p><p class=\"lines\"></p>\n<p><strong>9. Rolle Schulsozialarbeit:</strong></p><p class=\"lines\"></p>\n<p><strong>10. Erster nächster Schritt:</strong></p><p class=\"lines\"></p>\n</div>\n</div>\n\n<div class=\"task\">\n<label for=\"t11\">Pflichtaufgabe: Nutzen Sie die Struktur des Formulars für einen Fall und füllen Sie die zehn Punkte in Textform aus.</label>\n<textarea id=\"t11\" data-required=\"true\" data-min=\"520\"></textarea>\n<button onclick=\"saveField('t11'); analyzeText('t11')\">Antwort prüfen</button>\n<div id=\"analysis_t11\" class=\"analysis\"></div>\n</div>\n", "\n<div class=\"theory\">\n<h2>Übergang zu Band 5, Modul 2</h2>\n<p>Modul 5.1 klärt Konfliktverständnis. Modul 5.2 vertieft Gewaltprävention und deeskalierende Intervention. Dort geht es stärker um Grenzen, Schutz, Gewaltformen, Interventionsschritte und Prävention.</p>\n<div class=\"linebox\">\n<strong>Kern aus Modul 5.1:</strong> Erst sortieren, dann handeln. Konfliktbearbeitung, Gewaltintervention, Mobbingbearbeitung und Kinderschutz folgen unterschiedlichen Logiken.\n</div>\n<div class=\"hint\">\n<strong>Wiedergutmachung als Ausblick:</strong> Wiedergutmachung ist mehr als Entschuldigung. Sie braucht Verantwortungsübernahme, passende Form, Zustimmung der betroffenen Person und Schutz vor erneuter Beschämung. Das wird in späteren Modulen vertieft.\n</div>\n</div>\n\n\n<div class=\"theory\">\n<h2>Quellen- und Orientierungsblock</h2>\n<p>Dieses Modul arbeitet fachlich-didaktisch. Es ersetzt keine lokale Dienstanweisung, keine Rechtsberatung und keine Einzelfallentscheidung. Für die praktische Anwendung sind insbesondere zu prüfen:</p>\n<ul>\n<li>schulisches Gewaltpräventionskonzept</li>\n<li>schulisches Schutzkonzept</li>\n<li>Regelungen zu Aufsicht, Ganztag, Mensa, Buswartezeit und AGs</li>\n<li>Dokumentations- und Datenschutzvorgaben der Schule</li>\n<li>lokale Kooperationswege im Landkreis Emsland</li>\n<li>Abgrenzung zu Kinderschutzverfahren aus Band 4</li>\n<li>Klassen-, Pausen- und Ganztagsregeln am jeweiligen Standort</li>\n</ul>\n<div class=\"nds\">\n<strong>Niedersachsen / Emsland:</strong> Die regionale Einordnung im Modul dient der Praxisnähe. Konkrete Zuständigkeiten, Meldewege und Dokumentationsorte müssen immer am eigenen Schulstandort aktuell geprüft werden.\n</div>\n</div>\n\n<div class=\"theory\">\n<h2>Mobile Prüfliste vor Veröffentlichung</h2>\n<p>Vor dem Hochladen auf GitHub sollte die Datei einmal auf Smartphone und Desktop getestet werden.</p>\n<table>\n<tr><th>Prüfpunkt</th><th>Erledigt?</th></tr>\n<tr><td>Navigation ein- und ausblendbar</td><td>☐</td></tr>\n<tr><td>Abschnitt 1 ausfüllen und abschließen</td><td>☐</td></tr>\n<tr><td>gesperrter Abschnitt wird erst nach Abschluss freigegeben</td><td>☐</td></tr>\n<tr><td>Audio-Fall wird vorgelesen oder Falltext ist gut lesbar</td><td>☐</td></tr>\n<tr><td>Musterlösungen erscheinen erst nach eigener Bearbeitung</td><td>☐</td></tr>\n<tr><td>Textfelder sind auf kleinem Bildschirm gut bedienbar</td><td>☐</td></tr>\n<tr><td>Quiz lässt sich auswerten</td><td>☐</td></tr>\n<tr><td>Zertifikat wird erst nach Abschlusslogik sichtbar</td><td>☐</td></tr>\n<tr><td>Export funktioniert</td><td>☐</td></tr>\n<tr><td>Druck/PDF ist lesbar</td><td>☐</td></tr>\n</table>\n</div>\n\n<div class=\"theory\">\n<h2>Vorbereitung Band-5-Übersichtsseite</h2>\n<p>Wenn Band 5 vollständig ist, sollte eine eigene Startseite für den Band erstellt werden. Die spätere Struktur kann so aussehen:</p>\n<table>\n<tr><th>Modul</th><th>Thema</th><th>Status / Link</th></tr>\n<tr><td>5.1</td><td>Konflikte im schulischen Alltag verstehen</td><td>abgeschlossen / Link ergänzen</td></tr>\n<tr><td>5.2</td><td>Gewaltprävention und deeskalierende Intervention</td><td>als nächstes</td></tr>\n<tr><td>5.3</td><td>Mobbing erkennen, einordnen und bearbeiten</td><td>folgt</td></tr>\n<tr><td>5.4</td><td>Klassenbezogene Interventionen und Wiedergutmachungsprozesse</td><td>folgt</td></tr>\n</table>\n<div class=\"linebox\">\n<strong>Übergang:</strong> Modul 5.1 liefert die Sortierlogik. Modul 5.2 setzt daran an und vertieft Gewaltprävention, deeskalierende Intervention, Schutz und klare Grenzen im schulischen Alltag.\n</div>\n</div>\n\n<div class=\"theory\">\n<h2>Gelingensnachweis</h2>\n<p>Beantworten Sie die Fragen. Danach verfassen Sie den Transferauftrag. Das Zertifikat wird freigeschaltet, wenn alle Abschnitte abgeschlossen, mindestens 80 % im Quiz erreicht und der Transferauftrag ausreichend bearbeitet wurde.</p>\n<div id=\"quiz\"></div>\n<button onclick=\"gradeQuiz()\">Gelingensnachweis auswerten</button>\n<div id=\"quizResult\" class=\"feedback\"></div>\n</div>\n\n<div class=\"task\">\n<label for=\"transfer\">Transferauftrag: Bearbeiten Sie einen schulischen Konfliktfall nach dieser Struktur: 1. Konfliktraum, 2. beteiligte Rollen, 3. beobachtbare Fakten, 4. Aussagen, 5. Vermutungen, 6. Eskalationsstufe, 7. Gewalt-/Mobbinghinweise, 8. Schutzbedarf, 9. Rolle Schulsozialarbeit, 10. erster nächster Schritt. Berücksichtigen Sie Niedersachsen-/Emsland-Bezug, Datenschutz, Ganztag/Bus/digitale Räume und die Abgrenzung zu Kinderschutz. Mindestlänge: 2200 Zeichen.</label>\n<textarea id=\"transfer\" data-required=\"true\" data-min=\"2200\"></textarea>\n<button onclick=\"saveField('transfer'); analyzeText('transfer'); updateCertificate()\">Transfer prüfen</button>\n<div id=\"analysis_transfer\" class=\"analysis\"></div>\n</div>\n\n<div id=\"competence\" class=\"competence\"></div>\n\n<div id=\"certificate\" class=\"certificate hidden\">\n<h2>Abschlussnachweis</h2>\n<p>Der Lernpfad <strong>Band 5, Modul 1: Konflikte im schulischen Alltag verstehen</strong> wurde erfolgreich bearbeitet.</p>\n<p>Name: <span id=\"certName\">________________</span></p>\n<p>Datum: <span id=\"certDate\"></span></p>\n<button onclick=\"window.print()\">Drucken / als PDF speichern</button>\n</div>\n\n<button onclick=\"exportData()\">Bearbeitung exportieren</button>\n<button onclick=\"sendData()\">An Google Sheets senden</button>\n<div id=\"sendStatus\" class=\"feedback\"></div>\n"];
+const SECTION_TITLES = ["1. Einstieg: Konflikte verstehen, bevor man handelt", "2. Begriffe sauber unterscheiden", "3. Konflikt-Eskalationsstufen", "4. Gewaltformen als Überblick", "5. Konfliktanalyse als Entscheidungsbaum", "6. Rolle der Schulsozialarbeit und Lehrkräfteperspektive", "7. Konflikträume im Emsland: Ganztag, Bus, Mensa, AG", "8. Fallwerkstatt Grundschule: Pause, Fußball, Ausschluss", "9. Fallwerkstatt Oberschule: Chatgruppe und Bloßstellung", "10. Fehlerwerkstatt: Konflikte falsch bearbeiten", "11. Praxisformular: Konfliktanalyse", "12. Abschluss: Gelingensnachweis und Übergang zu Modul 5.2"];
+const QUIZ = [["Warum ist die erste Einordnung eines Konflikts wichtig?", ["weil unterschiedliche Lagen unterschiedliche Handlungen erfordern", "weil immer dieselbe Intervention passt", "weil Schulsozialarbeit Konflikte vermeiden muss", "weil Dokumentation unnötig ist"], 0], ["Was kennzeichnet Mobbing eher als einfachen Streit?", ["Wiederholung, Machtungleichgewicht und systematische Schädigung", "einmalige Wut", "zwei gleich starke Meinungen", "kurzer Pausenstreit"], 0], ["Ein Kind wird seit zwei Wochen in der Pause ausgeschlossen und in einer Gruppe ausgelacht. Was muss geprüft werden?", ["Mobbingverdacht, Machtgefälle, Wiederholung und Schutzbedarf", "nur wer angefangen hat", "ob das Kind empfindlich ist", "ob die Klasse abstimmen soll"], 0], ["Welche Rolle spielen Zuschauende in Konflikt- und Mobbingdynamiken?", ["Sie können durch Schweigen, Lachen oder Weiterleiten die Dynamik stabilisieren", "Sie sind immer unbeteiligt", "Sie dürfen nie angesprochen werden", "Sie ersetzen Fachberatung"], 0], ["Wann ist ein gemeinsames Gespräch riskant?", ["bei Machtgefälle, Angst, Gewalt oder Mobbingverdacht", "bei jedem kleinen Missverständnis", "wenn beide gleich stark sind", "wenn vorher einzeln geklärt wurde"], 0], ["Eine Lehrkraft fordert Mediation bei eindeutigem Mobbingverdacht. Was ist richtig?", ["erst Kriterien, Schutzbedarf und Risiken prüfen", "sofort alle zusammenholen", "Betroffene Person zur Entschuldigung auffordern", "Fall ignorieren"], 0], ["Eltern eskalieren einen Kinderstreit in einer WhatsApp-Gruppe. Was ist fachlich wichtig?", ["digitale Gruppendynamik, Datenschutz, Schutz und Gesprächsstruktur klären", "Screenshots breit verteilen", "Elternchat als offizielles Verfahren nutzen", "Kinder öffentlich befragen"], 0], ["Welche Gewaltform liegt bei Bloßstellung über Screenshots nahe?", ["digitale / psychische Gewalt", "nur Sachkonflikt", "immer körperliche Gewalt", "keine schulische Relevanz"], 0], ["Was ist bei digitaler Bloßstellung falsch?", ["Screenshots privat sammeln und weiterleiten", "Schutz und Datenschutz prüfen", "nicht öffentlich in der Klasse klären", "Dynamik analysieren"], 0], ["Welche Frage gehört in den Entscheidungsbaum?", ["Gibt es Wiederholung, Machtungleichgewicht oder akute Gefahr?", "Wer ist am unsympathischsten?", "Wie kann man es schnell wegmachen?", "Welche Strafe passt immer?"], 0], ["Was ist im Emsland-Kontext besonders zu beachten?", ["soziale Nähe, Ganztag, Vereine, Buswege und lokale Konzepte", "dass Konflikte dort nicht vorkommen", "dass Datenschutz weniger wichtig ist", "dass Schulsozialarbeit allein zuständig ist"], 0], ["Welche Konflikträume können außerhalb des Klassenraums relevant sein?", ["Mensa, Bus, Ganztag, AG, digitale Gruppen", "nur Lehrerzimmer", "nur Zeugnisse", "nur Sekretariat"], 0], ["Was ist fachlich problematisch?", ["Die sollen sich einfach vertragen", "Wir klären erst die Dynamik", "Wir achten auf Schutzbedarf", "Wir dokumentieren sachlich"], 0], ["Was ist bei Mobbingverdacht falsch?", ["vorschnell alle gemeinsam in ein Klärungsgespräch zwingen", "Wiederholung prüfen", "Machtgefälle prüfen", "Betroffene schützen"], 0], ["Was ist kein Auftrag der Schulsozialarbeit?", ["pauschale Disziplinierung auf Zuruf", "Konfliktanalyse", "Beratung", "Prävention"], 0], ["Was bedeutet Schutzlogik aus Band 4 für Band 5?", ["bei Gefährdung reicht normale Konfliktbearbeitung nicht aus", "sie spielt keine Rolle mehr", "sie ersetzt jede Konfliktarbeit", "sie gilt nur für Erwachsene"], 0], ["Was ist bei diskriminierender Abwertung wichtig?", ["Betroffene schützen und Diskriminierung nicht als normalen Streit verharmlosen", "als Spaß abtun", "nur beide entschuldigen lassen", "nicht dokumentieren"], 0], ["Was sollte eine professionelle Antwort an eine Lehrkraft enthalten?", ["Rollenklärung und gemeinsamer nächster Schritt", "Übernahme aller Disziplinierung", "Ablehnung jeder Kooperation", "Weitergabe vertraulicher Details"], 0], ["Was ist eine Beobachtung?", ["konkret Wahrnehmbares", "private Bewertung", "Diagnose", "Gerücht"], 0], ["Was gehört zu einem strukturierten Transferauftrag?", ["Konfliktraum, Rollen, Fakten, Aussagen, Vermutungen, Eskalationsstufe und nächster Schritt", "nur Bauchgefühl", "nur Schuldfrage", "nur Sanktion"], 0], ["Was ist Wiedergutmachung nicht?", ["eine schnelle Entschuldigung ohne Schutz und Verantwortungsübernahme", "ein möglicher späterer Schritt", "an Zustimmung und Schutz gebunden", "mehr als ein Ritual"], 0], ["Was bereitet Modul 5.1 für Modul 5.2 vor?", ["Gewaltprävention und deeskalierende Intervention", "Mathematikunterricht", "Zeugniserstellung", "Dienstrechtliche Beurteilung"], 0], ["Im Audio-Fall werden Screenshots weitergeschickt und mehrere lachen mit. Was muss geprüft werden?", ["digitale Gewalt, Gruppendynamik, Mobbingverdacht und Schutzbedarf", "nur ob der Betroffene empfindlich ist", "ob die Klasse abstimmen möchte", "ob es wirklich lustig war"], 0]];
+let state = JSON.parse(localStorage.getItem(MODULE_ID+"_state") || '{"done":[],"fields":{},"quizScore":0,"quiz":{}}');
+state.quiz = state.quiz || {};
+let current = 0;
+
+function saveState(){ localStorage.setItem(MODULE_ID+"_state", JSON.stringify(state)); }
+function getLearnerName(){ return (document.getElementById('learnerName')?.value || '').trim(); }
+function getLearnerEmail(){ return (document.getElementById('userEmail')?.value || '').trim(); }
+function isValidEmail(value){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || '').trim()); }
+function setSendStatus(message){
+ const status=document.getElementById('sendStatus') || document.getElementById('sendStatusHeader');
+ const header=document.getElementById('sendStatusHeader');
+ const top=document.getElementById('sendStatusTop');
+ if(status) status.textContent=message;
+ if(header && header!==status) header.textContent=message;
+ if(top && top!==status) top.textContent=message;
+}
+function validateContactData(){
+ const name=getLearnerName();
+ const email=getLearnerEmail();
+ const privacy=document.getElementById('privacyConfirm');
+ if(!name){ setSendStatus('Bitte geben Sie vor dem Absenden einen Namen ein.'); document.getElementById('learnerName')?.focus(); return false; }
+ if(!email || !isValidEmail(email)){ setSendStatus('Bitte geben Sie vor dem Absenden eine gültige E-Mail-Adresse ein.'); document.getElementById('userEmail')?.focus(); return false; }
+ if(privacy && !privacy.checked){ setSendStatus('Bitte bestätigen Sie im Header Datenschutz und Übermittlung.'); privacy.focus(); return false; }
+ localStorage.setItem(MODULE_ID+"_name",name);
+ localStorage.setItem(MODULE_ID+"_email",email);
+ localStorage.setItem(MODULE_ID+"_privacy",privacy && privacy.checked ? "1" : "0");
+ state.fields.learnerName=name;
+ state.fields.userEmail=email;
+ state.fields.privacyConfirm=!!(privacy && privacy.checked);
+ saveState();
+ return true;
+}
+function render(){
+ const secWrap=document.getElementById('sections');
+ secWrap.innerHTML = SECTION_HTML.map((b,i)=>`<section class="card section ${i===current?'active':''}" id="section${i}">
+ <h2>${SECTION_TITLES[i]}</h2>${b}
+ <div class="controls"><button onclick="completeSection(${i})">Abschnitt abschließen</button><button class="secondary" onclick="go(${Math.max(0,i-1)})">Zurück</button><button class="secondary" onclick="go(${Math.min(SECTION_HTML.length-1,i+1)})">Weiter</button></div>
+ </section>`).join('');
+ renderNav(); restoreFields(); renderQuiz(); updateProgress(); updateCertificate(); renderCompetence();
+}
+function renderNav(){
+ const nav=document.getElementById('navButtons');
+ nav.innerHTML=SECTION_TITLES.map((t,i)=>{
+  const locked = i>0 && !state.done.includes(i-1);
+  return `<button class="navbtn ${locked?'locked':''} ${state.done.includes(i)?'done':''} ${i===current?'active':''}" onclick="go(${i})" ${locked?'disabled':''}>${state.done.includes(i)?'✓':'○'} ${i+1}. ${t}</button>`;
+ }).join('');
+}
+function go(i){
+ if(i>0 && !state.done.includes(i-1)){ alert("Dieser Abschnitt wird erst nach Abschluss des vorherigen Abschnitts freigeschaltet."); return; }
+ current=i; render();
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleNav(){
+ document.getElementById('nav').classList.toggle('hidden');
+ document.getElementById('layout').classList.toggle('full');
+}
+function requiredFieldsInSection(i){
+ return [...document.querySelectorAll(`#section${i} [data-required="true"]`)];
+}
+function completeSection(i){
+ const fields=requiredFieldsInSection(i);
+ for(const el of fields){
+  const min = parseInt(el.dataset.min || "1",10);
+  if(!el.value || (el.tagName==="TEXTAREA" && el.value.trim().length < min)){
+   alert("Bitte bearbeiten Sie zuerst alle Pflichtfelder dieses Abschnitts. Bei Freitextfeldern ist eine Mindestlänge erforderlich.");
+   el.focus(); return;
+  }
+  state.fields[el.id]=el.value;
+ }
+ if(!state.done.includes(i)) state.done.push(i);
+ saveState(); renderNav(); updateProgress(); updateCertificate();
+ alert("Abschnitt abgeschlossen.");
+}
+function updateProgress(){
+ const n=state.done.length,total=SECTION_HTML.length;
+ const pct=Math.round(n/total*100);
+ document.getElementById('bar').style.width=pct+"%";
+ document.getElementById('progressText').textContent=`${n} / ${total} abgeschlossen`;
+ const prog=document.querySelector('.progress[role="progressbar"]');
+ if(prog) prog.setAttribute('aria-valuenow', String(pct));
+}
+function saveField(id){
+ const el=document.getElementById(id);
+ if(el){ state.fields[id]=el.value; saveState(); }
+}
+function restoreFields(){
+ Object.entries(state.fields||{}).forEach(([id,val])=>{ const el=document.getElementById(id); if(el) el.value=val; });
+ const nm=document.getElementById('learnerName'); if(nm){ nm.value=localStorage.getItem(MODULE_ID+"_name")||state.fields.learnerName||""; nm.oninput=()=>{ localStorage.setItem(MODULE_ID+"_name",nm.value); state.fields.learnerName=nm.value; saveState(); }; }
+ const em=document.getElementById('userEmail'); if(em){ em.value=localStorage.getItem(MODULE_ID+"_email")||state.fields.userEmail||""; em.oninput=()=>{ localStorage.setItem(MODULE_ID+"_email",em.value); state.fields.userEmail=em.value; saveState(); }; }
+ const pc=document.getElementById('privacyConfirm'); if(pc){ pc.checked=localStorage.getItem(MODULE_ID+"_privacy")==="1" || state.fields.privacyConfirm===true; pc.onchange=()=>{ localStorage.setItem(MODULE_ID+"_privacy",pc.checked?"1":"0"); state.fields.privacyConfirm=pc.checked; saveState(); }; }
+}
+function showSolution(id){ document.getElementById(id)?.classList.remove('hidden'); }
+
+function showSolutionIfReady(id){
+ const solution = document.getElementById(id);
+ if(!solution){ return; }
+ const section = solution.closest('.section');
+ if(!section){
+  solution.classList.remove('hidden');
+  return;
+ }
+ const fields = [...section.querySelectorAll('[data-required="true"]')];
+ for(const el of fields){
+  const min = parseInt(el.dataset.min || "1", 10);
+  if(!el.value || (el.tagName === "TEXTAREA" && el.value.trim().length < min)){
+   alert("Bitte bearbeiten Sie zuerst die Pflichtaufgabe dieses Abschnitts. Die Musterlösung wird erst danach freigeschaltet.");
+   el.focus();
+   return;
+  }
+  state.fields[el.id] = el.value;
+ }
+ saveState();
+ solution.classList.remove('hidden');
+}
+function checkSelect(id, correct, target){
+ const val=document.getElementById(id).value; saveField(id);
+ const fb=document.getElementById(target);
+ if(val===correct) fb.innerHTML='<span class="good">Richtig.</span> Diese Auswahl passt fachlich.';
+ else fb.innerHTML='<span class="bad">Noch nicht passend.</span> Prüfen Sie die Abgrenzung zwischen Streit, Konflikt, Gewalt, Mobbing und Kinderschutz.';
+}
+function analyzeText(id){
+ const el=document.getElementById(id), box=document.getElementById("analysis_"+id);
+ if(!el||!box) return;
+ const t=el.value.toLowerCase();
+ const warnings = [
+  ["immer mobbing","Mobbing sollte nicht vorschnell behauptet werden. Wiederholung, Machtgefälle und Systematik prüfen."],
+  ["ist sofort mobbing","Mobbing sollte nicht vorschnell behauptet werden."],
+  ["ist nur spaß","Verharmlosung kann Schutzbedarf übersehen."],
+  ["selbst schuld","Vorsicht vor Schuldumkehr. Betroffene Perspektive und Schutzbedarf prüfen."],
+  ["nur bestrafen","Reine Straflogik greift sozialpädagogisch zu kurz."],
+  ["wegmachen","Konflikte können nicht einfach wegdelegiert werden. Es braucht Rollenklärung und gemeinsame Verantwortung."],
+  ["alle zusammen an einen tisch","Bei Machtgefälle oder Mobbingverdacht kann ein gemeinsames Gespräch riskant sein."],
+  ["mediationsgespräch mit allen","Mediation ist bei Mobbingverdacht oder Machtgefälle riskant."],
+  ["eltern whatsapp","Eltern-WhatsApp-Gruppen sind keine offiziellen Klärungs- oder Dokumentationswege."],
+  ["whatsapp-gruppe","Eltern-WhatsApp-Gruppen sind keine offiziellen Klärungs- oder Dokumentationswege."],
+  ["entschuldige dich dann ist gut","Entschuldigung ohne Verantwortungsübernahme und Schutz kann oberflächlich bleiben."],
+  ["ganze klasse ausfragen","Gruppenbefragungen können Datenschutz, Gerüchte und Eskalation verschärfen."],
+  ["klasse soll abstimmen","Abstimmungen über Konflikte oder Betroffene sind fachlich riskant."],
+  ["screenshots sammeln","Bei digitalen Konflikten keine privaten Screenshots sammeln oder weiterleiten."],
+  ["alles der lehrkraft","Vertrauliche Inhalte werden nicht pauschal weitergegeben."],
+  ["kinderschutz immer","Nicht jeder Konflikt ist Kinderschutz. Schutzlogik prüfen, aber nicht vorschnell etikettieren."],
+  ["die sind schuld","Vorsicht vor vorschneller Schuldzuschreibung. Beobachtung, Aussage und Vermutung trennen."]
+ ];
+ const positives=["beobachtung","aussage","vermutung","konfliktart","mobbing","gewalt","kinderschutz","schutz","datenschutz","rolle","schulsozialarbeit","niedersachsen","emsland","ganztag","pause","bus","mensa","ag","digital","nächster schritt","beteiligung","dokumentation","machtgefälle","wiederholung","gruppe","eskalationsstufe","konfliktraum","zuschauende","mitläufer","verteidiger","wiedergutmachung","eltern","whatsapp","audio","fallimpuls","screenshots","digitale gewalt"];
+ let html="";
+ const hits=warnings.filter(w=>t.includes(w[0]));
+ if(hits.length) html += "<strong>Warnhinweise:</strong><ul>"+hits.map(h=>`<li>${h[1]}</li>`).join("")+"</ul>";
+ const pos=positives.filter(p=>t.includes(p));
+ html += "<strong>Positive Marker gefunden:</strong> "+(pos.length?pos.join(", "):"noch wenige fachliche Marker sichtbar")+".";
+ if(el.tagName==="TEXTAREA"){
+  const min=parseInt(el.dataset.min||"0",10);
+  if(el.value.trim().length<min) html += `<p class="bad">Mindestlänge noch nicht erreicht: ${el.value.trim().length} / ${min} Zeichen.</p>`;
+ }
+ box.innerHTML=html;
+ saveField(id); renderCompetence();
+}
+function renderQuiz(){
+ const q=document.getElementById('quiz'); if(!q) return;
+ state.quiz = state.quiz || {};
+ q.innerHTML=QUIZ.map((item,idx)=>{
+  const opts=item[1].map((o,j)=>`<label><input type="radio" name="q${idx}" value="${j}" ${String(state.quiz['q'+idx])===String(j)?'checked':''} onchange="state.quiz['q${idx}']=${j}; saveState();"> ${o}</label>`).join("");
+  return `<div class="q"><strong>${idx+1}. ${item[0]}</strong>${opts}</div>`;
+ }).join("");
+}
+function gradeQuiz(){
+ let score=0;
+ state.quiz = state.quiz || {};
+ QUIZ.forEach((it,i)=>{ const chosen=document.querySelector(`input[name=q${i}]:checked`); if(chosen){ state.quiz['q'+i]=Number(chosen.value); } if(Number(state.quiz['q'+i])===it[2]) score++; });
+ state.quizScore=score; saveState();
+ const need=Math.ceil(QUIZ.length*0.8);
+ document.getElementById('quizResult').innerHTML=`Ergebnis: <strong>${score} / ${QUIZ.length}</strong>. Bestehensgrenze: ${need} richtige Antworten. ${score>=need?'Bestanden.':'Bitte überarbeiten.'}`;
+ updateCertificate(); renderCompetence();
+}
+function renderCompetence(){
+ const box=document.getElementById('competence'); if(!box) return;
+ const txt=Object.values(state.fields||{}).join(" ").toLowerCase();
+ const areas=[
+  ["Begriffsklärung",["streit","konflikt","gewalt","mobbing","kinderschutz"]],
+  ["Eskalationsverständnis",["eskalationsstufe","wiederholung","machtgefälle","gruppe"]],
+  ["Schüler:innen- und Gruppenperspektive",["zuschauende","mitläufer","verteidiger","betroffene","gruppe"]],
+  ["Konfliktanalyse",["beobachtung","aussage","vermutung","nächster schritt"]],
+  ["Rollenklärung",["rolle","schulsozialarbeit","kooperation","lehrkraft"]],
+  ["Digitale Konflikte",["digital","chat","screenshot","datenschutz"]],
+  ["Niedersachsen/Emsland",["niedersachsen","emsland","ganztag","bus","mensa"]],
+  ["Gesprächsentscheidung",["gemeinsames gespräch","einzelklärung","mediation","mobbingverdacht"]],
+  ["Abgrenzung Schutzlogik",["schutz","kinderschutz","gewalt","mobbingverdacht"]]
+ ];
+ box.innerHTML="<h3>Kompetenz-Ampel</h3><table><tr><th>Bereich</th><th>Status</th></tr>"+areas.map(a=>{
+  const count=a[1].filter(k=>txt.includes(k)).length;
+  const st=count>=2?'<span class="good">sicher sichtbar</span>':count===1?'<span class="warningText">teilweise sichtbar</span>':'<span class="bad">noch wenig sichtbar</span>';
+  return `<tr><td>${a[0]}</td><td>${st}</td></tr>`;
+ }).join("")+"</table>";
+}
+function updateCertificate(){
+ const cert=document.getElementById('certificate'); if(!cert) return;
+ const transfer=document.getElementById('transfer');
+ const needQuiz=Math.ceil(QUIZ.length*0.8);
+ const ok = state.done.length>=SECTION_HTML.length && (state.quizScore||0)>=needQuiz && transfer && transfer.value.trim().length>=2200;
+ cert.classList.toggle('hidden', !ok);
+ const n=document.getElementById('learnerName')?.value || "________________";
+ document.getElementById('certName').textContent=n;
+ document.getElementById('certDate').textContent=new Date().toLocaleDateString('de-DE');
+}
+function exportData(){
+ const doneCount=state.done.length;
+ const total=SECTION_HTML.length;
+ const data={name:getLearnerName(), email:getLearnerEmail(), module:MODULE_ID, title:document.title, done:state.done, erledigt:doneCount, progress:Math.round(doneCount/total*100), fields:state.fields, quiz:state.quiz, quizScore:state.quizScore, timestamp:new Date().toISOString(), exportedAt:new Date().toISOString()};
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=MODULE_ID+"_bearbeitung.json"; a.click();
+}
+function saveNow(){
+ state.fields.learnerName=document.getElementById('learnerName')?.value.trim() || "";
+ state.fields.userEmail=document.getElementById('userEmail')?.value.trim() || "";
+ state.fields.privacyConfirm=!!document.getElementById('privacyConfirm')?.checked;
+ document.querySelectorAll('textarea, select, input[type="text"], input[type="email"], input[type="number"]').forEach(el=>{
+  if(el.id) state.fields[el.id]=el.value;
+ });
+ localStorage.setItem(MODULE_ID+"_name",state.fields.learnerName);
+ localStorage.setItem(MODULE_ID+"_email",state.fields.userEmail);
+ localStorage.setItem(MODULE_ID+"_privacy",state.fields.privacyConfirm?"1":"0");
+ saveState();
+ setSendStatus("Zwischengespeichert. Sie können später weiterarbeiten.");
+}
+
+function getOpenTasks(){
+ const open=[];
+ for(let i=0;i<SECTION_HTML.length;i++){
+  if(!state.done.includes(i)) open.push((i+1)+". "+SECTION_TITLES[i]);
+ }
+ return open;
+}
+
+function getQuizMeta(){
+ const max = Array.isArray(QUIZ) ? QUIZ.length : 0;
+ const score = Number(state.quizScore || 0);
+ const pct = max ? Math.round(score / max * 100) : 0;
+ return {score, max, pct, passed: max ? pct >= 80 : false};
+}
+
+async function sendData(){
+ saveNow();
+ if(!validateContactData()) return;
+ const doneCount=state.done.length;
+ const total=SECTION_HTML.length;
+ const openTasks=getOpenTasks();
+ const quiz=getQuizMeta();
+ const progressPct=Math.round(doneCount/total*100);
+ if(openTasks.length){
+  setSendStatus("Gesendet wird trotzdem. Hinweis: Es sind noch "+openTasks.length+" Abschnitt(e) offen.");
+ }
+ const payload={
+  name:getLearnerName(),
+  email:getLearnerEmail(),
+  module:MODULE_ID,
+  modul:"Band 5 Modul 1",
+  modultitel:"Konflikte im schulischen Alltag verstehen",
+  erledigt:doneCount+" / "+total,
+  progress:progressPct,
+  progressPct:progressPct,
+  quizScore:quiz.score,
+  quizMax:quiz.max,
+  quizPct:quiz.pct,
+  quizPassed:quiz.passed,
+  openTasks:openTasks,
+  timestamp:new Date().toISOString(),
+  state:state
+ };
+ if(!APP_PUBLIC_URL || APP_PUBLIC_URL.includes("HIER_DEINE")){ setSendStatus("Google-Sheets-Anbindung ist vorbereitet, aber noch nicht aktiviert. Tragen Sie die Web-App-URL ein."); return; }
+ try {
+  await fetch(APP_PUBLIC_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+  setSendStatus(openTasks.length ? "Daten wurden gesendet. Es sind noch offene Aufgaben vermerkt." : "Daten wurden gesendet.");
+ } catch(e) { setSendStatus("Senden fehlgeschlagen: "+e.message); }
+}
+function speakAudioCase(){
+ const node=document.getElementById('audioCaseText');
+ if(!node){ alert("Audio-Falltext wurde nicht gefunden."); return; }
+ if(!('speechSynthesis' in window)){ alert("Die Vorlesefunktion wird von diesem Browser nicht unterstützt. Bitte lesen Sie den Falltext."); return; }
+ window.speechSynthesis.cancel();
+ const text=node.innerText.replace("Falltext:","");
+ const utterance=new SpeechSynthesisUtterance(text);
+ utterance.lang="de-DE";
+ utterance.rate=0.95;
+ utterance.pitch=1;
+ window.speechSynthesis.speak(utterance);
+}
+function stopAudioCase(){
+ if('speechSynthesis' in window){ window.speechSynthesis.cancel(); }
+}
+
+function resetProgress(){
+ if(confirm("Fortschritt wirklich löschen?")){ localStorage.removeItem(MODULE_ID+"_state"); state={done:[],fields:{},quizScore:0,quiz:{}}; render(); }
+}
+render();
+</script>
+</body>
+</html>
